@@ -19,7 +19,7 @@ df = pd.read_csv ('data/DL_FIRE_M-C61_215362/fire_archive_M-C61_215362.csv')
 dates = df.acq_date.unique()
 df_dates = df.groupby(by="acq_date")
 
-# Loop through list
+# Loop through each date
 for date in dates:
 
     # Create new np array with NAN for date

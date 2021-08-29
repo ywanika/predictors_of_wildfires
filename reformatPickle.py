@@ -1,4 +1,4 @@
-#take the 20 np arrays in each pickle file and add them to a list so they are iterable
+#take the 20 np arrays in each grid-Met pickle file and add them to a list so they are iterable
 
 import netCDF4 as nc
 import numpy as np
