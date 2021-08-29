@@ -1,4 +1,4 @@
-#Will load the data, crop it, convert it to a Numpy array, and save it in a pickel file
+#Will load the data, crop it, convert it to a Numpy array, and save it in a pickle file
 
 import netCDF4 as nc
 import numpy as np
