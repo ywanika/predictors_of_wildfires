@@ -1,1 +1,3 @@
-/data/**
+/data/*.nc
+/data/out/*.nc
+.DS_Store

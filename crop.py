@@ -12,11 +12,11 @@ opt = [
     c.Limit(dmn_name="lon", srt=-124.7, end=-113.1)
 ]
 
-nco.ncks(input="GridMet/pet1980.nc", output= "GridMet/out_pet1980.nc", options=opt)"""
+nco.ncks(input="data/fm100_2000_copy.nc", output= "data/out/fm100_2000_copy.nc", options=opt)"""
 
 #---------------------------
 
-import netCDF4 as nc
+"""import netCDF4 as nc
 import numpy
 
 fn = "data/Out_gridMet/out_tmmx1980.nc"
@@ -25,4 +25,8 @@ ds = nc.Dataset(fn)
 for var in ds.variables.values(): 
     print(var) #variable metadata
 
-#print( ds['prcp'].shape)
+#print( ds['prcp'].shape)"""
+
+#---------------------------
+"""import os
+os.system(' ncea -d lat,32.3,42.2 -d lon,-124.7,-113.1 "data/fm100_2000_copy.nc" "data/out/fm100_2000_copy.nc" ')"""
