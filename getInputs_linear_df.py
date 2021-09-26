@@ -1,6 +1,7 @@
-#creating array of inputs and labels for one year used to train model
+#creating dataframe of inputs and labels for one year used to train model
 import numpy as np
 import pickle
+import pandas as pd
 
 fire = pickle.load(open("data/pickle_fire2/fire_final.pickle", "rb")) #[20][365/6, 238, 278]
 fm100 = pickle.load(open("data/pickle_gridMet2/fm100.pickle", "rb"))
@@ -24,17 +25,14 @@ tmmn_flatten = tmmn[1].flatten()
 tmmx_flatten = tmmx[1].flatten()
 vs_flatten = vs[1].flatten()
 
-#note: get array of input = [258860, 9], label = [249204,9]
-#getting array of data = [18165320, 9], label = [18165320,]
-data_train = []
-labels_train = []
+df = pd.DataFrame(columns=["fire", "fm100", "pet", "pr", "sph", "srad", "th", "tmmn", "tmmx", "vs"])
+
 for i in range(len(fm100_flatten)):
     truth_value = np.isnan(fm100_flatten[i]) or np.isnan(pet_flatten[i]) or np.isnan(pr_flatten[i]) or np.isnan(sph_flatten[i]) or np.isnan(srad_flatten[i]) or np.isnan(th_flatten[i]) or np.isnan(tmmn_flatten[i]) or np.isnan(tmmx_flatten[i]) or np.isnan(vs_flatten[i]) 
     if not truth_value:
-        features = [ fm100_flatten[i], pet_flatten[i], pr_flatten[i], sph_flatten[i], srad_flatten[i], th_flatten[i], tmmn_flatten[i], tmmx_flatten[i], vs_flatten[i] ]
-        data_train.append(features)
-        labels_train.append(fire_flatten[i])
-
-pickle.dump(data_train, open( "data/inputs_for_model/data_train.pickle", "wb" ) )
-pickle.dump(labels_train, open( "data/inputs_for_model/labels_train.pickle", "wb" ) )
+        features = [ fire_flatten[i], fm100_flatten[i], pet_flatten[i], pr_flatten[i], sph_flatten[i], srad_flatten[i], th_flatten[i], tmmn_flatten[i], tmmx_flatten[i], vs_flatten[i] ]
+        df_temp = pd.DataFrame([features], columns=["fire", "fm100", "pet", "pr", "sph", "srad", "th", "tmmn", "tmmx", "vs"])
+        df = df.append(df_temp)
+        
+pickle.dump(df, open( "data/inputs_for_model/allData_df.pickle", "wb" ) )
 print("done")
