@@ -21,6 +21,6 @@ for title in titles:
             #replace the year in the array with that year without feb 29th
             temp_array[year] = np.delete(temp_array[year], [leapDayNum], axis=0) 
 
-    pickle.dump(temp_array, open( "data/pickle_gridMet2/"+fn, "wb" ) )
+    pickle.dump(temp_array, open( "data/pickle_gridMet_leap/"+fn, "wb" ) )
 
     
