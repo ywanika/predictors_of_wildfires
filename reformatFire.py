@@ -1,4 +1,4 @@
-#get all the fire pickle files to be [20][365,238,278]
+#get all the fire pickle files to be [20][365,238,278] and turn brightness to 0s and 1s
 import numpy as np
 import pickle
 import os

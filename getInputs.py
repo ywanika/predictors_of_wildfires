@@ -3,15 +3,15 @@ import numpy as np
 import pickle
 
 fire = pickle.load(open("data/pickle_fire2/fire_final.pickle", "rb")) #[20][365/6, 238, 278]
-fm100 = pickle.load(open("data/pickle_gridMet2/fm100.pickle", "rb"))
-pet = pickle.load(open("data/pickle_gridMet2/pet.pickle", "rb"))
-pr = pickle.load(open("data/pickle_gridMet2/pr.pickle", "rb"))
-sph = pickle.load(open("data/pickle_gridMet2/sph.pickle", "rb"))
-srad = pickle.load(open("data/pickle_gridMet2/srad.pickle", "rb"))
-th = pickle.load(open("data/pickle_gridMet2/th.pickle", "rb"))
-tmmn = pickle.load(open("data/pickle_gridMet2/tmmn.pickle", "rb"))
-tmmx = pickle.load(open("data/pickle_gridMet2/tmmx.pickle", "rb"))
-vs = pickle.load(open("data/pickle_gridMet2/vs.pickle", "rb"))
+fm100 = pickle.load(open("data/pickle_gridMet_leap/fm100.pickle", "rb"))
+pet = pickle.load(open("data/pickle_gridMet_leap/pet.pickle", "rb"))
+pr = pickle.load(open("data/pickle_gridMet_leap/pr.pickle", "rb"))
+sph = pickle.load(open("data/pickle_gridMet_leap/sph.pickle", "rb"))
+srad = pickle.load(open("data/pickle_gridMet_leap/srad.pickle", "rb"))
+th = pickle.load(open("data/pickle_gridMet_leap/th.pickle", "rb"))
+tmmn = pickle.load(open("data/pickle_gridMet_leap/tmmn.pickle", "rb"))
+tmmx = pickle.load(open("data/pickle_gridMet_leap/tmmx.pickle", "rb"))
+vs = pickle.load(open("data/pickle_gridMet_leap/vs.pickle", "rb"))
 
 fire_flatten = fire[1].flatten()
 fm100_flatten = fm100[1].flatten()
