@@ -48,31 +48,42 @@ pickle.dump(coor, open( dir+ "coor.pickle", "wb" ) )
 labels = pickle.load(open( dir+ "labels.pickle", "rb" ) )
 coor = pickle.load(open( dir+ "coor.pickle", "rb" ) )"""
 
+#get boxes around coordinates with stacked array
 data = []
 bad_indices = []
 window_dim = 25
 half_window = int(window_dim/2)
 array_hieght = fm100.shape[1]
 array_width = fm100.shape[2]
+fm100_max = fm100.max()
+pet_max = pet.max()
+pr_max = pr.max()
+sph_max = sph.max()
+srad_max = srad.max()
+th_max = th.max()
+tmmn_max = tmmn.max()
+tmmx_max = tmmx.max()
+vs_max = vs.max()
 
 for i, c in enumerate(coor):
     if c[1] - half_window < 0 or c[1] + half_window > array_hieght or c[2] - half_window < 0 or c[2] + half_window > array_width:
         bad_indices.append(i)
     else:
-        img_patch_fm100 = fm100[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window]
-        img_patch_pet = pet[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window]
-        img_patch_pr = pr[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window]
-        img_patch_sph = sph[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window]
-        img_patch_srad = srad[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window]
-        img_patch_th = th[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window]
-        img_patch_tmmn = tmmn[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window]
-        img_patch_tmmx = tmmx[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window]
-        img_patch_vs = vs[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window]
+        img_patch_fm100 = fm100[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window] / fm100_max
+        img_patch_pet = pet[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window] / pet_max
+        img_patch_pr = pr[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window] / pr_max
+        img_patch_sph = sph[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window] / sph_max
+        img_patch_srad = srad[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window] / srad_max
+        img_patch_th = th[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window] / th_max
+        img_patch_tmmn = tmmn[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window] / tmmn_max
+        img_patch_tmmx = tmmx[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window] / tmmx_max
+        img_patch_vs = vs[c[0], c[1] - half_window : c[1] + half_window, c[2] - half_window : c[2] + half_window] / vs_max
         features_array = np.stack((img_patch_fm100, img_patch_pet, img_patch_pr, img_patch_sph, img_patch_srad, img_patch_th, img_patch_tmmn, img_patch_tmmx, img_patch_vs), axis = 2)
         data.append(features_array)
 
-labels = [i for j, i in enumerate(labels) if j not in bad_indices]
+pickle.dump(data, open( dir+ "images.pickle", "wb" ) )
 
+labels = [i for j, i in enumerate(labels) if j not in bad_indices]
 pickle.dump(labels, open( dir+ "labels.pickle", "wb" ) )
 
 #combine features into one array
