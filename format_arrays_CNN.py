@@ -17,10 +17,10 @@ tmmx = pickle.load(open(dir + 'tmmx.pickle', "rb"))
 vs = pickle.load(open(dir + 'vs.pickle', "rb"))
 
 
-###get fire and non-fire labels and coordinates
+##get fire and non-fire labels and coordinates
 labels = []
 coor = []
-#get fire coordinates
+#get all fire coordinates
 for day in range(fire.shape[0]):
     row,col = np.ma.nonzero(fire[day, :, :])
     if row.size != 0:
@@ -28,7 +28,7 @@ for day in range(fire.shape[0]):
             coor.append((day, row[point], col[point]))
             labels.append(1)
 
-#get non-fire coordinates 
+#get random non-fire coordinates of same # as fire
 n = len(coor) #2347
 x=0
 while x < n:
@@ -41,14 +41,13 @@ while x < n:
         x+=1
 
 dir = "data/CNN_model_inputs/input_arrays/"
-
 pickle.dump(coor, open( dir+ "coor.pickle", "wb" ) )
 
 """dir = "data/CNN_model_inputs/input_arrays/"
 labels = pickle.load(open( dir+ "labels.pickle", "rb" ) )
 coor = pickle.load(open( dir+ "coor.pickle", "rb" ) )"""
 
-#get boxes around coordinates with stacked array
+##get boxes around coordinates and stack
 data = []
 bad_indices = []
 window_dim = 25
@@ -65,6 +64,7 @@ tmmn_max = tmmn.max()
 tmmx_max = tmmx.max()
 vs_max = vs.max()
 
+#go through the list of coordinates, throw out ones near the edge, normalize the patches
 for i, c in enumerate(coor):
     if c[1] - half_window < 0 or c[1] + half_window > array_hieght or c[2] - half_window < 0 or c[2] + half_window > array_width:
         bad_indices.append(i)
@@ -85,22 +85,3 @@ pickle.dump(data, open( dir+ "images.pickle", "wb" ) )
 
 labels = [i for j, i in enumerate(labels) if j not in bad_indices]
 pickle.dump(labels, open( dir+ "labels.pickle", "wb" ) )
-
-#combine features into one array
-"""features_array = np.empty((fm100.shape[0], fm100.shape[1], fm100.shape[2],9), dtype=float)
-
-for day in range(fm100.shape[0]):
-    for row in range(fm100.shape[1]):
-        for col in range(fm100.shape[2]):
-            fm100_val = fm100[day,row,col]
-            pet_val = pet[day,row,col]
-            pr_val = pr[day,row,col]
-            sph_val = sph[day,row,col]
-            srad_val = srad[day,row,col]
-            th_val = th[day,row,col]
-            tmmn_val = tmmn[day,row,col]
-            tmmx_val = tmmx[day,row,col]
-            vs_val = vs[day,row,col]
-            features_array[day,row,col] = (fm100_val, pet_val, pr_val, sph_val, srad_val, th_val, tmmn_val, tmmx_val, vs_val)
-
-pickle.dump(labels, open( dir+ "features_array.pickle", "wb" ) )"""
