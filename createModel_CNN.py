@@ -12,6 +12,8 @@ print ("loading files...")
 data = pickle.load(open("data/CNN_model_inputs/input_arrays/images.pickle", "rb"))
 labels = pickle.load(open("data/CNN_model_inputs/input_arrays/labels.pickle", "rb"))
 
+data = [np.ma.getdata(d) for d in data]
+
 #convert to array
 data = np.asarray(data)
 labels = np.asarray(labels)
@@ -30,7 +32,8 @@ model.add(Conv2D(256, (3, 3), activation='relu'))
 model.add(Flatten())
 model.add(Dense(128, activation='relu'))
 model.add(Dense(64, activation='relu'))
-model.add(Dense(32, activation='softmax'))
+model.add(Dense(32, activation='relu'))
+model.add(Dense(2, activation='softmax'))
 
 #compile model using accuracy to measure model performance
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])

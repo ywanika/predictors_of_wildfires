@@ -41,7 +41,7 @@ while x < n:
         x+=1
 
 dir = "data/CNN_model_inputs/input_arrays/"
-pickle.dump(coor, open( dir+ "coor.pickle", "wb" ) )
+#pickle.dump(coor, open( dir+ "coor.pickle", "wb" ) )
 
 """dir = "data/CNN_model_inputs/input_arrays/"
 labels = pickle.load(open( dir+ "labels.pickle", "rb" ) )
